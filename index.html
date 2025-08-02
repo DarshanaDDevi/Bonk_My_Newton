@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Newton Apple Fall</title>
+  <style>
+    body {
+      background: #cceeff;
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial;
+    }
+    #tree {
+      position: absolute;
+      top: 70px;
+      left: 25%;
+      width: 50%;
+    }
+    #newton {
+      position: absolute;
+      bottom: 70px;
+      left: 550px;
+      width: 250px;
+    }
+    .apple {
+      position: absolute;
+      width: 30px;
+      transition: transform 2.5s ease-in;
+    }
+    .popup {
+  position: absolute;
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 10px; /* increased */
+  border-radius: 12px;
+  font-size: 20px; /* increased */
+  max-width: 300px; /* increased */
+  box-shadow: 3px 3px 15px #999;
+  display: none;
+}
+
+    #fallBtn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="fallBtn">Drop Apple</button>
+  <img id="tree" src="tree1.png" alt="Tree">
+  <img id="newton" src="newton1.png" alt="Newton">
+  <div id="popup" class="popup"></div>
+
+  <script>
+    const fallBtn = document.getElementById("fallBtn");
+    const popup = document.getElementById("popup");
+function playAudio(src) {
+  const audio = new Audio(src);
+  audio.play();
+}
+
+    const funnyDialogues = [
+     "Angle: {angle}° - Apple missed Newton! Now he's planning his wedding! 💍",
+"Angle: {angle}° - No hit. Newton is off to babysit his future kids 👶",
+"Angle: {angle}° - Apple missed! Newton is chilling with tea ☕",
+"Angle: {angle}° - Apple missed Newton! He’s dreaming about mangoes instead! 🥭",
+"Angle: {angle}° - Apple missed! Newton is fast asleep under the tree 😴",
+"Angle: {angle}° - No hit. Newton is busy writing a love letter 💌",
+"Angle: {angle}° - Apple missed Newton! He’s singing to birds 🐦",
+"Angle: {angle}° - Apple missed! Newton is daydreaming about biryani 🍛",
+"Angle: {angle}° - No hit. Newton just started doodling flowers in his diary 🌸",
+"Angle: {angle}° - Apple missed Newton! He’s humming lullabies like a dad 🎵"
+
+    ];
+
+    const gravitationDialogues = [
+      "Angle: 90° - 💥 Apple hit Newton's head! He's thinking about gravity...",
+      "...and now he's burdened with discovering laws of physics! 📚",
+    ];
+const funnyImages = [
+  "marriednewton.png",
+  "babysit.png",
+  "tea.png",
+  "mango.png",
+  "sleeping.png",
+  "loveletter.png",
+  "birdsinging.png",
+  "biriyani.png",
+  "flowerdoodle.png",
+  "dadlullaby.png"
+];
+const gravityImages = [
+  "hit.png",
+  "thinking.png"
+];
+
+    fallBtn.addEventListener("click", () => {
+      const angle = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150][Math.floor(Math.random() * 10)];
+      const apple = document.createElement("img");
+      apple.src = "apple1.png";
+      apple.className = "apple";
+      document.body.appendChild(apple);
+
+      const startX = 700;
+  const startY = 180;
+  apple.style.left = `${startX}px`;
+  apple.style.top = `${startY}px`;
+
+  const rad = angle * (Math.PI / 180);
+  const distance = 300;
+  const deltaX = distance * Math.cos(rad);
+  const deltaY = distance * Math.sin(rad);
+
+  setTimeout(() => {
+    apple.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  }, 100);
+
+      // Move apple
+      setTimeout(() => {
+        apple.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      }, 100);
+
+      // Show popup
+      setTimeout(() => {
+        const popupX = startX + deltaX;
+        const popupY = 100 + deltaY;
+        popup.style.left = `${popupX}px`;
+        popup.style.top = `${popupY}px`;
+
+        if (angle === 90) {
+          
+         popup.innerHTML = `
+  <img src="gravitation.png" width="100"><br>${gravitationDialogues[0]}
+`;
+popup.style.display = "block";
+
+setTimeout(() => {
+  popup.innerHTML = `
+    <img src="student.png" width="100"><br>${gravitationDialogues[1]}
+  `;
+  popup.style.display = "block";
+}, 2000);
+ playAudio("gravity1.mp3");
+        } else {
+          const randomIndex = Math.floor(Math.random() * funnyDialogues.length);
+const randomDialogue = funnyDialogues[randomIndex].replace("{angle}", angle);
+const imageSrc = funnyImages[randomIndex];
+
+popup.innerHTML = `
+  <img src="${imageSrc}" width="150"><br>${randomDialogue}
+`;
+popup.style.display = "block";
+if (funnyDialogues[randomIndex].includes("wedding")) {
+  playAudio("church.mp3.mp3");}
+ if (funnyDialogues[randomIndex].includes("mangoes")) {
+    playAudio("mango.mp3.mp3");
+}
+if (funnyDialogues[randomIndex].includes("babysit")) {
+    playAudio("babysit.mp3.mp3");
+}
+if (funnyDialogues[randomIndex].includes("love")) {
+    playAudio("loveletter.mp3");
+}
+if (funnyDialogues[randomIndex].includes("flower")) {
+    playAudio("flower.mp3");
+}
+if (funnyDialogues[randomIndex].includes("biryani")) {
+    playAudio("biriyani.mp3");
+}
+if (funnyDialogues[randomIndex].includes("tea")) {
+    playAudio("tea.mp3");
+}
+if (funnyDialogues[randomIndex].includes("lullabies")) {
+    playAudio("dad.mp3");
+}
+if (funnyDialogues[randomIndex].includes("asleep")) {
+    playAudio("sleep.mp3");
+    
+}
+if (funnyDialogues[randomIndex].includes("birds")) {
+    playAudio("flower.mp3");
+    
+}
+
+        }
+
+        setTimeout(() => {
+          popup.style.display = "none";
+          document.body.removeChild(apple);
+        }, 20000);
+      }, 3200);
+    });
+  </script>
+</body>
+</html>
